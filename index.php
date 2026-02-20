@@ -104,7 +104,7 @@
                 ['icon'=>'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z', 'title'=>'Speech-to-Text', 'desc'=>'Voice notes converted to structured text via Whisper API — reducing documentation time significantly.', 'color'=>'from-emerald-500 to-teal-400'],
                 ['icon'=>'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', 'title'=>'AI Summarization', 'desc'=>'OpenAI-powered summaries of consultations, including decisions, action items, and follow-up plans.', 'color'=>'from-amber-500 to-orange-400'],
                 ['icon'=>'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z', 'title'=>'Secure Payments', 'desc'=>'Integrated PayMongo processing for GCash, Maya, cards, and online banking with live status updates.', 'color'=>'from-pink-500 to-rose-400'],
-                ['icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'title'=>'Admin Dashboard', 'desc'=>'Centralized management for appointments, staff, records, and system analytics with audit-ready logs.', 'color'=>'from-sky-500 to-blue-400'],
+                ['icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'title'=>'Dashboard', 'desc'=>'Centralized management for appointments, staff, records, and system analytics with audit-ready logs.', 'color'=>'from-sky-500 to-blue-400'],
             ];
             foreach ($features as $f): ?>
             <div class="bg-dark-card border border-white/5 rounded-2xl p-6 hover:border-white/10 transition-all group">
@@ -161,7 +161,6 @@
 <footer class="border-t border-white/5 py-8 px-6">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/30">
         <span>© 2026 TeleCare AI. All rights reserved.</span>
-        <span>Built by The Development Team — BS Information Systems, CCS 111</span>
     </div>
 </footer>
 
