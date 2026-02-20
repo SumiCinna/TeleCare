@@ -191,7 +191,7 @@ $statusColors = [
         <div class="bg-dark-card border border-white/5 rounded-2xl">
             <div class="flex items-center justify-between p-6 border-b border-white/5">
                 <h3 class="font-semibold text-white">Recent Appointments</h3>
-                <a href="#" class="text-xs text-primary hover:text-primary-dark transition-colors">View all →</a>
+                <a href="appointments.php" class="text-xs text-primary hover:text-primary-dark transition-colors">View all →</a>
             </div>
             <?php if (empty($recentAppointments)): ?>
             <div class="flex flex-col items-center justify-center py-16 text-center px-6">
