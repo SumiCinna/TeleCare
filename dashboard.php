@@ -92,6 +92,7 @@ $statusColors = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard – TeleCare AI</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/dashboard.css">
     <script>
@@ -110,7 +111,7 @@ $statusColors = [
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-dark text-white font-sans antialiased flex overflow-x-hidden">
+<body class="bg-dark text-white font-sans antialiased flex h-screen overflow-hidden">
 
 <?php include 'includes/sidebar.php'; ?>
 
@@ -129,7 +130,7 @@ $statusColors = [
         </div>
         <div class="flex items-center gap-3">
             <button class="w-9 h-9 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-colors relative">
-                <svg class="w-4.5 h-4.5 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                 </svg>
             </button>
@@ -168,7 +169,7 @@ $statusColors = [
                 $statCards = [
                     ['label' => 'Total Patients',      'value' => $stats['patients'],           'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', 'color' => 'from-blue-500 to-cyan-400'],
                     ['label' => 'Doctors',             'value' => $stats['doctors'],            'icon' => 'M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'from-emerald-500 to-teal-400'],
-                    ['label' => 'All Appointments',   'value' => $stats['total_appointments'], 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'color' => 'from-amber-500 to-orange-400'],
+                    ['label' => 'All Appointments',    'value' => $stats['total_appointments'], 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', 'color' => 'from-amber-500 to-orange-400'],
                     ['label' => "Today's Sessions",    'value' => $stats['today'],              'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',                                                    'color' => 'from-violet-500 to-purple-400'],
                 ];
             }

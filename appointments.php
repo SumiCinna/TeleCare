@@ -65,6 +65,7 @@ $totalPages = ceil($total / $perPage);
     <title>Appointments – TeleCare AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <script>
         tailwind.config = {
             theme: {
@@ -87,7 +88,7 @@ $totalPages = ceil($total / $perPage);
         })();
     </script>
 </head>
-<body class="bg-dark text-white font-sans antialiased flex overflow-x-hidden">
+<body class="bg-dark text-white font-sans antialiased flex h-screen overflow-hidden">
 
 <?php include 'includes/sidebar.php'; ?>
 

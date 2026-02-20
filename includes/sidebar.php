@@ -6,11 +6,7 @@ if (!isset($activePage)) $activePage = '';
 <aside id="sidebar" class="w-64 shrink-0 h-screen sticky top-0 bg-dark-sidebar border-r border-white/5 flex flex-col z-30 transition-all duration-300 ease-in-out lg:translate-x-0 lg:relative lg:flex fixed">
     <div class="h-16 flex items-center px-4 border-b border-white/5">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shrink-0">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                </svg>
-            </div>
+            <img src="images/logo.jpg" alt="TeleCare AI Logo" class="h-9 w-auto object-contain rounded-lg sidebar-logo">
             <span class="font-bold text-sm sidebar-label">Tele<span class="text-primary">Care</span> <span class="text-white/30 text-xs">AI</span></span>
         </div>
     </div>

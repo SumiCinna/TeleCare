@@ -1,14 +1,9 @@
 <?php
 session_start();
-if (isset($_SESSION['user_id'])) {
-    header('Location: ../dashboard.php');
-    exit;
-}
-
+if (isset($_SESSION['user_id'])) { header('Location: ../dashboard.php'); exit; }
 require_once '../config/database.php';
 
 $error = '';
-$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = trim($_POST['email'] ?? '');
@@ -27,14 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$user['is_active']) {
                 $error = 'Your account has been deactivated. Contact support.';
             } else {
-                $_SESSION['user_id']   = $user['id'];
-                $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
-                $_SESSION['user_role'] = $user['role'];
-                $_SESSION['user_email']= $user['email'];
-
-                $log = $pdo->prepare('INSERT INTO activity_logs (user_id, action, description, ip_address) VALUES (?, ?, ?, ?)');
-                $log->execute([$user['id'], 'login', 'User logged in', $_SERVER['REMOTE_ADDR']]);
-
+                $_SESSION['user_id']    = $user['id'];
+                $_SESSION['user_name']  = $user['first_name'] . ' ' . $user['last_name'];
+                $_SESSION['user_role']  = $user['role'];
+                $_SESSION['user_email'] = $user['email'];
+                $pdo->prepare('INSERT INTO activity_logs (user_id, action, description, ip_address) VALUES (?, ?, ?, ?)')
+                    ->execute([$user['id'], 'login', 'User logged in', $_SERVER['REMOTE_ADDR']]);
                 header('Location: ../dashboard.php');
                 exit;
             }
@@ -50,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In – TeleCare AI</title>
+    <link rel="icon" type="image/jpeg" href="../images/logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="../css/login.css">
     <script>
         tailwind.config = {
@@ -67,6 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        #g_id_onload, .g_id_signin { width: 100% !important; }
+        .g_id_signin > div { width: 100% !important; }
+    </style>
 </head>
 <body class="bg-dark min-h-screen flex font-sans antialiased">
 
@@ -76,20 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="absolute bottom-1/3 right-1/4 w-56 h-56 bg-accent/15 rounded-full blur-3xl"></div>
     <div class="relative z-10 flex flex-col justify-between p-12 w-full">
         <a href="../index.php" class="flex items-center gap-2">
-            <div class="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                </svg>
-            </div>
+            <img src="../images/logo.jpg" alt="TeleCare AI" class="h-9 w-auto object-contain rounded-lg">
             <span class="text-xl font-bold">Tele<span class="text-primary">Care</span> <span class="text-white/30 text-sm">AI</span></span>
         </a>
         <div>
-            <h2 class="text-4xl font-extrabold text-white leading-tight mb-4">
-                Your health,<br>our priority.
-            </h2>
-            <p class="text-white/50 text-base leading-relaxed max-w-sm">
-                Access your patient records, book appointments, and consult with doctors — all from one intelligent platform.
-            </p>
+            <h2 class="text-4xl font-extrabold text-white leading-tight mb-4">Your health,<br>our priority.</h2>
+            <p class="text-white/50 text-base leading-relaxed max-w-sm">Access your patient records, book appointments, and consult with doctors — all from one intelligent platform.</p>
             <div class="mt-10 space-y-4">
                 <?php
                 $highlights = [
@@ -117,11 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="w-full max-w-md">
         <div class="mb-8">
             <a href="../index.php" class="flex items-center gap-2 mb-8 lg:hidden">
-                <div class="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                </div>
+                <img src="../images/logo.jpg" alt="TeleCare AI" class="h-8 w-auto object-contain rounded-lg">
                 <span class="font-bold">Tele<span class="text-primary">Care</span> AI</span>
             </a>
             <h1 class="text-3xl font-bold text-white mb-1">Welcome back</h1>
@@ -130,49 +117,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if (isset($_GET['registered'])): ?>
         <div class="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm px-4 py-3 rounded-xl mb-6">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Account created successfully! You can now sign in.
         </div>
         <?php endif; ?>
 
         <?php if ($error): ?>
-        <div class="flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl mb-6">
-            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <?= htmlspecialchars($error) ?>
+        <div class="flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl mb-6" id="errorBox">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="errorMsg"><?= htmlspecialchars($error) ?></span>
+        </div>
+        <?php else: ?>
+        <div class="hidden flex items-center gap-3 bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl mb-6" id="errorBox">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="errorMsg"></span>
         </div>
         <?php endif; ?>
+
+        <div id="g_id_onload"
+            data-client_id="901503175288-na0f91f6bppnfbthdl6cn7fbg8e5m0bi.apps.googleusercontent.com"
+            data-callback="handleGoogleLogin">
+        </div>
+        <div class="g_id_signin mb-5" data-type="standard" data-theme="outline" data-size="large" data-text="signin_with" data-width="100%"></div>
+
+        <div class="flex items-center gap-3 mb-5">
+            <div class="flex-1 h-px bg-white/10"></div>
+            <span class="text-xs text-white/30">or sign in with email</span>
+            <div class="flex-1 h-px bg-white/10"></div>
+        </div>
 
         <form method="POST" action="" novalidate id="loginForm">
             <div class="space-y-5">
                 <div>
                     <label class="block text-sm font-medium text-white/70 mb-1.5" for="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
-                        placeholder="you@example.com"
-                        class="w-full bg-white/5 border border-white/10 text-white placeholder-white/25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                        required
-                    >
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" placeholder="you@example.com"
+                           class="w-full bg-white/5 border border-white/10 text-white placeholder-white/25 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" required>
                     <p class="text-red-400 text-xs mt-1 hidden" id="emailError">Please enter a valid email address.</p>
                 </div>
-
                 <div>
                     <label class="block text-sm font-medium text-white/70 mb-1.5" for="password">Password</label>
                     <div class="relative">
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="••••••••"
-                            class="w-full bg-white/5 border border-white/10 text-white placeholder-white/25 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
-                            required
-                        >
+                        <input type="password" id="password" name="password" placeholder="••••••••"
+                               class="w-full bg-white/5 border border-white/10 text-white placeholder-white/25 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" required>
                         <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors p-1">
                             <svg id="eyeOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -185,11 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <p class="text-red-400 text-xs mt-1 hidden" id="passwordError">Password is required.</p>
                 </div>
-
-                <button
-                    type="submit"
-                    class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-all hover:scale-[1.01] active:scale-100 shadow-lg shadow-primary/25 text-sm mt-2"
-                >
+                <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-all hover:scale-[1.01] active:scale-100 shadow-lg shadow-primary/25 text-sm mt-2">
                     Sign In
                 </button>
             </div>
@@ -203,22 +185,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-const togglePassword = document.getElementById('togglePassword');
-const passwordInput  = document.getElementById('password');
-const eyeOpen        = document.getElementById('eyeOpen');
-const eyeClosed      = document.getElementById('eyeClosed');
+function handleGoogleLogin(response) {
+    fetch('../auth/google-login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ credential: response.credential })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '../dashboard.php';
+        } else {
+            const box = document.getElementById('errorBox');
+            document.getElementById('errorMsg').textContent = data.message;
+            box.classList.remove('hidden');
+            box.classList.add('flex');
+        }
+    })
+    .catch(() => {
+        const box = document.getElementById('errorBox');
+        document.getElementById('errorMsg').textContent = 'Something went wrong. Please try again.';
+        box.classList.remove('hidden');
+        box.classList.add('flex');
+    });
+}
 
-togglePassword.addEventListener('click', () => {
-    const isHidden = passwordInput.type === 'password';
-    passwordInput.type = isHidden ? 'text' : 'password';
-    eyeOpen.classList.toggle('hidden', isHidden);
-    eyeClosed.classList.toggle('hidden', !isHidden);
+document.getElementById('togglePassword').addEventListener('click', () => {
+    const isHidden = password.type === 'password';
+    password.type = isHidden ? 'text' : 'password';
+    document.getElementById('eyeOpen').classList.toggle('hidden', isHidden);
+    document.getElementById('eyeClosed').classList.toggle('hidden', !isHidden);
 });
+
+const password = document.getElementById('password');
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     let valid = true;
     const email    = document.getElementById('email');
-    const password = document.getElementById('password');
     const emailErr = document.getElementById('emailError');
     const passErr  = document.getElementById('passwordError');
     const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

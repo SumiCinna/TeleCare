@@ -74,6 +74,7 @@ $totalPages  = ceil($total / $perPage);
     <title>Consultations – TeleCare AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
     <script>
         tailwind.config = {
             theme: { extend: {
@@ -88,7 +89,7 @@ $totalPages  = ceil($total / $perPage);
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-dark text-white font-sans antialiased flex overflow-x-hidden">
+<body class="bg-dark text-white font-sans antialiased flex h-screen overflow-hidden">
 
 <?php include 'includes/sidebar.php'; ?>
 
